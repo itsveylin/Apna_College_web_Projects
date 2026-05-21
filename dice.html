@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>3D Dice Roller</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ffd6e7,#e9d5ff,#dbeafe);
+    overflow:hidden;
+}
+
+.container{
+    text-align:center;
+    padding:40px;
+    border-radius:35px;
+    background:rgba(255,255,255,0.35);
+    backdrop-filter:blur(14px);
+    box-shadow:0 10px 40px rgba(0,0,0,0.12);
+}
+
+h1{
+    color:#ff4f81;
+    margin-bottom:10px;
+    font-size:2.5rem;
+}
+
+p{
+    color:#555;
+    margin-bottom:35px;
+}
+
+.scene{
+    width:160px;
+    height:160px;
+    margin:auto;
+    perspective:800px;
+}
+
+.dice{
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:transform 1.5s ease;
+}
+
+.face{
+    position:absolute;
+    width:160px;
+    height:160px;
+    background:white;
+    border-radius:25px;
+    border:3px solid #f3f3f3;
+    display:grid;
+    place-items:center;
+    font-size:3rem;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.front  { transform: rotateY(0deg) translateZ(80px); }
+.back   { transform: rotateY(180deg) translateZ(80px); }
+.right  { transform: rotateY(90deg) translateZ(80px); }
+.left   { transform: rotateY(-90deg) translateZ(80px); }
+.top    { transform: rotateX(90deg) translateZ(80px); }
+.bottom { transform: rotateX(-90deg) translateZ(80px); }
+
+button{
+    margin-top:40px;
+    padding:15px 35px;
+    border:none;
+    border-radius:20px;
+    background:#ff4f81;
+    color:white;
+    font-size:1rem;
+    cursor:pointer;
+    transition:0.3s;
+    font-weight:600;
+    box-shadow:0 6px 15px rgba(255,79,129,0.3);
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.result{
+    margin-top:20px;
+    font-size:1.2rem;
+    color:#444;
+    font-weight:600;
+}
+
+.sparkle{
+    position:absolute;
+    font-size:2rem;
+    animation:float 5s linear infinite;
+    opacity:0.5;
+}
+
+.sparkle:nth-child(1){
+    top:10%;
+    left:15%;
+}
+
+.sparkle:nth-child(2){
+    bottom:15%;
+    right:12%;
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(0px) rotate(0deg);
+    }
+    50%{
+        transform:translateY(-20px) rotate(180deg);
+    }
+    100%{
+        transform:translateY(0px) rotate(360deg);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sparkle">✨</div>
+<div class="sparkle">🎀</div>
+
+<div class="container">
+
+    <h1>Dice Roller 🎲</h1>
+    <p>Press the button and roll your lucky number ✨</p>
+
+    <div class="scene">
+        <div class="dice" id="dice">
+
+            <div class="face front">1</div>
+            <div class="face back">6</div>
+            <div class="face right">3</div>
+            <div class="face left">4</div>
+            <div class="face top">5</div>
+            <div class="face bottom">2</div>
+
+        </div>
+    </div>
+
+    <button onclick="rollDice()">Roll Dice</button>
+
+    <div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+const dice = document.getElementById("dice");
+const result = document.getElementById("result");
+
+function rollDice(){
+
+    let random = Math.floor(Math.random() * 6) + 1;
+
+    switch(random){
+
+        case 1:
+            dice.style.transform =
+            "rotateX(0deg) rotateY(0deg)";
+            break;
+
+        case 2:
+            dice.style.transform =
+            "rotateX(90deg) rotateY(0deg)";
+            break;
+
+        case 3:
+            dice.style.transform =
+            "rotateY(-90deg)";
+            break;
+
+        case 4:
+            dice.style.transform =
+            "rotateY(90deg)";
+            break;
+
+        case 5:
+            dice.style.transform =
+            "rotateX(-90deg)";
+            break;
+
+        case 6:
+            dice.style.transform =
+            "rotateY(180deg)";
+            break;
+    }
+
+    result.innerText = `You rolled ${random} 🎉`;
+}
+
+</script>
+
+</body>
+</html>
